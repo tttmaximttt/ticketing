@@ -1,0 +1,35 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: micro-blog
+manifests:
+  rawYaml:
+    - infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: tttmaximttt/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: tttmaximttt/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.tsx'
+            dest: .
+    - image: tttmaximttt/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.tsx'
+            dest: .
