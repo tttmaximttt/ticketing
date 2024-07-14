@@ -20,12 +20,12 @@ jobs:
           aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-region: eu-central-1
+      - run: whoami
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
       - name: Create .npmrc file
         run: |
-          whoami
           touch ./auth/.npmrc
           export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain mr --domain-owner ${{secrets.AWS_DOMAIN_OWNER}} --region eu-central-1 --query authorizationToken --output text`
           echo "registry=https://mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/" > ./auth/.npmrc
