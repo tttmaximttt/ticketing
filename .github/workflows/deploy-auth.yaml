@@ -60,8 +60,6 @@ jobs:
           cd auth
           docker build -t localhost:32000/auth .
           docker push localhost:32000/auth
-      - name: Docker login
-        run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{secrets.AWS_DOMAIN_OWNER}}.dkr.ecr.eu-central-1.amazonaws.com
       - name: Deploy to MicroK8s
         run: |
           microk8s kubectl get services
