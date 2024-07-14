@@ -22,7 +22,14 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      - run: aws codeartifact login --tool npm --repository npm_private --domain mr --domain-owner ${{secrets.AWS_DOMAIN_OWNER}} --region eu-central-1
+      - name: Create .npmrc file
+        run: |
+          cd auth
+          export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain mr --domain-owner ${{AWS_DOMAIN_OWNER}} --region eu-central-1 --query authorizationToken --output text`
+          echo "registry=https://mr-${{AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/" > ~/.npmrc
+          echo "//mr-${{AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:always-auth=true" >> ~/.npmrc
+          echo "//mr-${{AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:_authToken=${{CODEARTIFACT_AUTH_TOKEN}}" >> ~/.npmrc
+          cat ~/.npmrc
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
