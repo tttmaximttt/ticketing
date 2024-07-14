@@ -45,7 +45,11 @@ jobs:
           mkdir $HOME/.kube
           touch $HOME/.kube/config
           echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > "$HOME/.kube/config"
+          kubectl config set-context --current --namespace=default
           cat $HOME/.kube/config
+      - name: Get current server API group list
+        run: |
+          kubectl api-resources
       - name: Deploy to MicroK8s
         run: |
           kubectl get services
