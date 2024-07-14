@@ -27,16 +27,17 @@ jobs:
         run: |
           cd auth
           export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain mr --domain-owner ${{secrets.AWS_DOMAIN_OWNER}} --region eu-central-1 --query authorizationToken --output text`
-          echo "registry=https://mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/" > ~/.npmrc
-          echo "//mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:always-auth=true" >> ~/.npmrc
-          echo "//mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:_authToken=$CODEARTIFACT_AUTH_TOKEN" >> ~/.npmrc
-          cat ~/.npmrc
-      - name: Build, tag, and push docker image to Amazon ECR
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ticketing
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd auth
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          echo $CODEARTIFACT_AUTH_TOKEN
+#          echo "registry=https://mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/" > ~/.npmrc
+#          echo "//mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:always-auth=true" >> ~/.npmrc
+#          echo "//mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:_authToken=$CODEARTIFACT_AUTH_TOKEN" >> ~/.npmrc
+#          cat ~/.npmrc
+#      - name: Build, tag, and push docker image to Amazon ECR
+#        env:
+#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          REPOSITORY: ticketing
+#          IMAGE_TAG: ${{ github.sha }}
+#        run: |
+#          cd auth
+#          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+#          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
