@@ -42,9 +42,9 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       - name: Configure kubectl
         run: |
-          echo "${{ secrets.K8S_CONFIG }}"
-#      - name: Deploy to MicroK8s
-#        run: |
+          echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > "$HOME/.kube/config"
+      - name: Deploy to MicroK8s
+        run: |
 #          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/my-app:latest
 #          kubectl rollout status deployment/my-app
-#          kubectl get services
+          kubectl get services
