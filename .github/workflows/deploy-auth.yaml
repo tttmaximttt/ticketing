@@ -28,5 +28,6 @@ jobs:
           REPOSITORY: ticketing
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          cd auth
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
