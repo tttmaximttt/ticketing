@@ -47,5 +47,5 @@ jobs:
       - name: Deploy to MicroK8s
         run: |
           microk8s kubectl get services
-          kubectl rollout restart deployment auth-depl
-          kubectl rollout status deployment/auth-depl
+          microk8s kubectl rollout restart deployment auth-depl
+          microk8s kubectl rollout status deployment/auth-depl
