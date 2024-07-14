@@ -21,7 +21,7 @@ router.post(
     const ticket = Ticket.build({
       title,
       price,
-      userId: req.currentUser!.id,
+      userId: req.ctx.user!.id,
     });
     await ticket.save();
 

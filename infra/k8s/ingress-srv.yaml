@@ -3,11 +3,11 @@ kind: Ingress
 metadata:
   name: ingress-service
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   ingressClassName: nginx
   rules:
-    - host: ticketing.dev
+    - host: mradko.net
       http:
         paths:
           - path: /api/users/?(.*)
@@ -15,13 +15,6 @@ spec:
             backend:
               service:
                 name: auth-srv
-                port:
-                  number: 3000
-          - path: /api/tickets/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: tickets-srv
                 port:
                   number: 3000
           - path: /?(.*)

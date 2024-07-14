@@ -34,7 +34,7 @@ describe('signup route', () => {
     expect(response.get('Set-Cookie')).toBeDefined();
   });
 
-  it('should ...', async () => {
+  it('should throw error with existing email', async () => {
     await request(app)
       .post('/api/users/signup')
       .send({
