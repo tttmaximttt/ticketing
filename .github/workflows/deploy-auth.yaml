@@ -48,6 +48,6 @@ jobs:
           cat $HOME/.kube/config
       - name: Deploy to MicroK8s
         run: |
-          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/my-app:latest
-          kubectl rollout status deployment/my-app
+#          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/my-app:latest
+#          kubectl rollout status deployment/my-app
           kubectl get services
