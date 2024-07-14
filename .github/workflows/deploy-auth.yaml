@@ -34,9 +34,17 @@ jobs:
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ticketing
-          IMAGE_TAG: auth
+          REPOSITORY: auth
+          IMAGE_TAG: latest
         run: |
           cd auth
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > $HOME/.kube/config
+      - name: Deploy to MicroK8s
+        run: |
+#          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/my-app:latest
+#          kubectl rollout status deployment/my-app
+          kubectl get services
