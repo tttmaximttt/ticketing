@@ -42,10 +42,8 @@ jobs:
 #          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       - name: Configure kubectl
         run: |
-#          mkdir $HOME/.kube
-#          touch $HOME/.kube/config
           echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > "$HOME/.kube/config"
-#          kubectl config set-context --current --namespace=default
+          kubectl config set-context --current --namespace=default
       - name: Get current server API group list
         run: |
           kubectl api-resources
