@@ -26,6 +26,7 @@ jobs:
       - name: Create .npmrc file
         run: |
           cd auth
+          touch .npmrc
           export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain mr --domain-owner ${{secrets.AWS_DOMAIN_OWNER}} --region eu-central-1 --query authorizationToken --output text`
           echo "registry=https://mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/" > ~/.npmrc
           echo "//mr-${{secrets.AWS_DOMAIN_OWNER}}.d.codeartifact.eu-central-1.amazonaws.com/npm/npm_private/:always-auth=true" >> ~/.npmrc
