@@ -22,6 +22,7 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+      - run: aws codeartifact login --tool npm --repository npm_private --domain mr --domain-owner ${{secrets.AWS_DOMAIN_OWNER}} --region eu-central-1
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
