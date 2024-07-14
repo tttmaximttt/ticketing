@@ -40,13 +40,20 @@ jobs:
 #          cd auth
 #          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
 #          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      - name: Fetch GitHub Actions IP ranges
+        id: ip-ranges
+        run: |
+          curl https://api.github.com/meta | jq -r '.actions[]' > actions-ip-ranges.txt
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'v1.18.0'
       - name: Configure kubectl
         run: |
           mkdir $HOME/.kube
           touch $HOME/.kube/config
           echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > "$HOME/.kube/config"
           kubectl config set-context --current --namespace=default
-          cat $HOME/.kube/config
       - name: Get current server API group list
         run: |
           kubectl api-resources
