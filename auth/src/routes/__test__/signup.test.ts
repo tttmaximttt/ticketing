@@ -49,6 +49,6 @@ describe('signup route', () => {
         email: 'test@gmail.com',
         password: '123456324dsf',
       })
-      .expect(401, {errors:[{message:'Email exist.'}]});
+      .expect(400, {errors:[{message:'Email exist.'}]});
   });
 })
