@@ -40,15 +40,19 @@ jobs:
 #          cd auth
 #          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
 #          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-      - name: Configure kubectl
-        run: |
-          echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > "$HOME/.kube/config"
-          kubectl config set-context --current --namespace=default
-      - name: Get current server API group list
-        run: |
-          kubectl api-resources
+#      - name: Set up kubectl
+#        uses: azure/setup-kubectl@v1
+#        with:
+#          version: 'v1.18.0'
+#      - name: Configure kubectl
+#        run: |
+#          echo "${{ secrets.K8S_CONFIG }}" | base64 --decode > "$HOME/.kube/config"
+#          kubectl config set-context --current --namespace=default
+#      - name: Get current server API group list
+#        run: |
+#          kubectl api-resources
       - name: Deploy to MicroK8s
         run: |
-          kubectl get services
+          microk8s kubectl get services
 #          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/my-app:latest
 #          kubectl rollout status deployment/my-app
