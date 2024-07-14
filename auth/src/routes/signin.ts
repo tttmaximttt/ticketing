@@ -19,10 +19,7 @@ const validators = [
 ];
 
 router.post("/api/users/signin", validators, validateRequest, async (req: Request, res: Response) => {
-  const {
-    email,
-    password
-  } = req.body;
+  const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
