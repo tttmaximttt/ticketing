@@ -7,4 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+          token: ${{secrets.GITHUB_TOKEN}}
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: eu-central-1
+      - run: aws codeartifact login --tool npm --repository npm_private --domain mr --domain-owner ${{AWS_DOMAIN_OWNER}} --region eu-central-1
       - run: cd auth && npm install && npm run test
