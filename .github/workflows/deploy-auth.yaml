@@ -44,7 +44,7 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - run: ls -la
+      - run: ls -la ./auth
 #      - name: Docker login
 #        run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{secrets.AWS_DOMAIN_OWNER}}.dkr.ecr.eu-central-1.amazonaws.com
 #      - name: Deploy to MicroK8s
