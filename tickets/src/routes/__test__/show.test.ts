@@ -25,7 +25,7 @@ describe('get /api/tickets/:id', () => {
     const ticketResponse = await request(app)
       .get(`/api/tickets/${response.body.id}`)
       .send()
-      .expect(200);
+      .expect(201);
 
     expect(ticketResponse.body.title).toEqual(title);
     expect(ticketResponse.body.price).toEqual(price);
