@@ -44,7 +44,7 @@ jobs:
 #    needs: build
     runs-on: self-hosted
     steps:
-      - run: ls -la ./auth
+      - run: aws codeartifact login --tool npm --repository npm_private --domain mr --domain-owner 763366473348 --region eu-central-1
       - name: Docker login
         run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{secrets.AWS_DOMAIN_OWNER}}.dkr.ecr.eu-central-1.amazonaws.com
       - name: Deploy to MicroK8s
